@@ -17,8 +17,13 @@
 					<label for="pwd">Password:</label> <input type="password"
 						class="form-control" id="pwd" name="pwd">
 				</div>
-				<button class="btn btn-primary btn-block" id="signin">Sign
-					in</button>
+				<button class="btn btn-primary btn-block" id="signin">Log-in
+				<span class="glyphicon glyphicon-log-in"></span>
+				</button>
+				<button class="btn btn-warning btn-block" id="signup">sign-up
+				<span class="glyphicon glyphicon-user"></span>
+				
+					</button>
 			</form>
 		</div>
 	</div>
@@ -33,6 +38,12 @@
 			$("form").submit();
 			return false;
 		});
+		
+		$("#signup").click(function() {
+			location = "/signup";
+			return false;
+		});
+		
 	</script>
 
 </body>

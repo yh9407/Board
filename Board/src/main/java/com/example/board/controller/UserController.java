@@ -30,7 +30,7 @@ public class UserController {
 		/* 중복 아이디 가입 불가를 위해서 가입여부 확인 */
 		User findUser = userRepository.findByEmail(user.getEmail());
 		System.out.println("@@@@@@@@@@@@" + findUser);
-		if (findUser != null) {
+		if (findUser == null) {
 			userRepository.save(user);
 		} else {
 			return "redirect:/signup";
@@ -41,10 +41,23 @@ public class UserController {
 	}
 
 	
+	@GetMapping("/signout")
+	public String signout() {
+		session.removeAttribute("user_info"); //지정된 세션값만 삭제
+		//sessin.invalidate(); 세션안에 모든 정보 삭제
+		return "redirect:/";
+	}
+	
 	@GetMapping("/signin")
 	public String signin() {
 		return "signin";
 	}
+	
+	
+	
+	
+	
+	
 
 	@PostMapping("/signin")
 	public String signinPost(@ModelAttribute User user) {
