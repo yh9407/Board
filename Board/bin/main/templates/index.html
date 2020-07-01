@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta charset="utf-8">
+
 <head th:replace="common/head">
 
 </head>
@@ -71,7 +73,20 @@
 
 	<footer class="container-fluid text-center" th:replace="common/footer">
 	</footer>
+	<script>
+	if(opener != null){ //로그인 업이 글써서 팝업이 떳다면
+		window.close(); //현재창크기
+	}
+	</script>
 
 
 </body>
 </html>
+
+
+
+
+
+
+
+

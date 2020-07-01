@@ -18,8 +18,9 @@
 					<textarea class="form-control" rows="5" name="content" id="content">
  </textarea>
 				</div>
-				<button type="submit" id="complete"
+				<button type="button" id="complete"
 					class="btn btn-primary btn-block">글쓰기</button>
+					
 			</form>
 		</div>
 	</div>
@@ -27,7 +28,28 @@
 
 
 	<footer th:replace="common/footer"> </footer>
-
+<script>
+$("#complete").click(function() { 
+	$.ajax({
+		url: '/board/write',
+		type: 'post',
+		data: $("form").serialize(), 
+		success: function(res){
+			/* 응답이 "0"일 경우 로그인 팝업창 띄우기 */
+			if(res =="0"){
+				//팝업띄우기 (주소,이름,옵션{크기})
+				alert("로그인 후 가능합니다")
+				window.open("/signin","login","width=300 heigh=200");
+			}else{
+				alert("글쓰기 완료되었습니다.");
+				location = "/board/";
+			}
+			
+		}	
+	});
+	return false;
+})
+</script>
 
 </body>
 </html>
