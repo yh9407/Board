@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:replace="common/head">
+</head>
+<body>
+	<nav th:replace="common/nav"></nav>
+
+	<div class="jumbotron">
+		<div class="container text-center">
+			<form method="post" action="/board/write">
+			
+			<input type = "hidden" name ="id" th:value ="${board.id}">
+			
+				<div class="form-group">
+					<label for="title">Title:</label> 
+					<input type="text"
+					class="form-control" 
+					name="title" id="title" th:value="${board.title}">
+				</div>
+				<div class="form-group">
+					<label for="content">Content:</label>
+					<textarea class="form-control" rows="5"
+					 name="content" id="content">[[${board.content}]]
+ </textarea>
+				</div>
+				<button type="button" id="complete"
+					class="btn btn-primary btn-block">글쓰기</button>
+					
+			</form>
+		</div>
+	</div>
+
+
+
+	<footer th:replace="common/footer"> </footer>
+<script>
+$("#complete").click(function() { 
+	$.ajax({
+		url: '/board/update',
+		type: 'post',
+		data: $("form").serialize(), 
+		success: function(res){
+			/* 응답이 "0"일 경우 로그인 팝업창 띄우기 */
+			if(res =="0"){
+				//팝업띄우기 (주소,이름,옵션{크기})
+				alert("로그인 후 가능합니다")
+				window.open("/signin","login","width=300 heigh=200");
+			}else{
+				alert("수정되었습니다.");
+				location = "/board/";
+			}
+			
+		}	
+	});
+	return false;
+})
+</script>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/head">
+
+</head>
+<body>
+	<nav class="navbar navbar-inverse" th:replace="common/nav"></nav>
+
+	
+	<div class="container text-center">
+		<div id="map" style="width: 500px; height: 400px; margin: 0 auto;"></div>
+	</div>
+
+	<script
+		src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=e5052740dc02b9c82d6e95bf4dcd0b77"></script>
+	<script>
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(pos) {//함수에 변수 삽입
+
+				var container = document.getElementById('map');
+				var options = {
+					center : new kakao.maps.LatLng(pos.coords.latitude,
+							pos.coords.longitude), // 변수
+					level : 4
+				};
+				var map = new kakao.maps.Map(container, options);
+				var markerPosition = new kakao.maps.LatLng(pos.coords.latitude,
+						pos.coords.longitude);
+				var marker = new kakao.maps.Marker({
+					position : markerPosition
+				});
+				marker.setMap(map);
+				$.ajax({
+					url : '/map/getPoint',
+					data : {
+						"lat" : pos.coords.latitude,
+						"lng" : pos.coords.longitude
+					},
+					success : function(res) {
+						for (var i = 0; i < res.length; i++) {
+							var marker = new kakao.maps.Marker({
+								map : map, // 마커를 표시할 지도
+								position : new kakao.maps.LatLng(
+										res[i].latitude, res[i].longitude),
+								title : res[i].title,
+							});
+						}
+					}
+				});
+			});
+		}
+	</script>
+	<footer class="container-fluid text-center" th:replace="common/footer">
+	</footer>
+
+</body>
+</html>
